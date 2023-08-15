@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { api } from 'servises/api';
 import { ActorCard, ActorImage, CastContainer } from './Cast.styled';
 
