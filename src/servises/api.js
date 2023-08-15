@@ -5,8 +5,8 @@ import axios from 'axios';
 const API_KEY = '447df3eb6e03f9f04da7db977a7fe76c';
 const baseURL = 'https://api.themoviedb.org/3';
 
-export const api = async params => {
-  const { data } = await axios.get(`${baseURL}/trending/all/day`, {
+export const api = async (url, params) => {
+  const { data } = await axios.get(`${baseURL}${url}`, {
     params: {
       api_key: API_KEY,
       ...params,
@@ -15,25 +15,25 @@ export const api = async params => {
   return data;
 };
 
-export const apiSearch = async params => {
-  const { data } = await axios.get(`${baseURL}/search/movie`, {
-    params: {
-      api_key: API_KEY,
-      ...params,
-    },
-  });
-  return data;
-};
+// export const apiSearch = async params => {
+//   const { data } = await axios.get(`${baseURL}/search/movie`, {
+//     params: {
+//       api_key: API_KEY,
+//       ...params,
+//     },
+//   });
+//   return data;
+// };
 
-export const apiMovieDetails = async (movieId, params) => {
-  const { data } = await axios.get(`${baseURL}/movie/${movieId}`, {
-    params: {
-      api_key: API_KEY,
-      ...params,
-    },
-  });
-  return data;
-};
+// export const apiMovieDetails = async (movieId, params) => {
+//   const { data } = await axios.get(`${baseURL}/movie/${movieId}`, {
+//     params: {
+//       api_key: API_KEY,
+//       ...params,
+//     },
+//   });
+//   return data;
+// };
 
 // export const getTrendingMovies = async () => {
 //   const response = await api('/trending/all/day');

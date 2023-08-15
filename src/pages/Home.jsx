@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { api } from 'servises/api';
@@ -6,21 +6,22 @@ import { api } from 'servises/api';
 export const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
-  useEffect(() => {
-    const fetchTrendingMovies = async () => {
-      try {
-        const data = await api();
-        setTrendingMovies(data.results);
-      } catch (error) {
-        console.error('Error fetching trending movies:', error);
-      }
-    };
-    fetchTrendingMovies();
+  const fetchTrendingMovies = useCallback(async () => {
+    try {
+      const data = await api('/trending/all/day');
+      setTrendingMovies(data.results);
+    } catch (error) {
+      console.error('Error fetching trending movies:', error);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchTrendingMovies();
+  }, [fetchTrendingMovies]);
 
   return (
     <div>
-      <h1>Trending Movies</h1>
+      <h1>Popular Movies</h1>
       <ul>
         {trendingMovies.map(movie => (
           <li key={movie.id}>
@@ -31,18 +32,3 @@ export const Home = () => {
     </div>
   );
 };
-
-// export const Home = () => {
-//   const [trendingMovies, setTrendingMovies] = useState([]);
-
-//   useEffect(() => {
-//     const fetchTrendingMovies = async () => {
-//       try {
-//         const data = await getTrendingMovies();
-//         setTrendingMovies(data.results);
-//       } catch (error) {
-//         console.error('Error fetching trending movies:', error);
-//       }
-//     };
-//     fetchTrendingMovies();
-//   }, []);

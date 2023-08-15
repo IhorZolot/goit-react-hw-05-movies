@@ -1,39 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { apiSearch } from 'servises/api';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { api } from 'servises/api';
 
 export const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query');
+  const location = useLocation();
 
   const handleSearchChange = event => {
-    setSearchQuery(event.target.value);
+    const { value } = event.target;
+    setSearchQuery(value);
   };
 
-  useEffect(() => {
-    const fetchSearchMovies = async () => {
-      try {
-        const response = await apiSearch({
-          query: searchQuery,
-        });
-
-        setMovies(response.results);
-      } catch (error) {
-        console.error('Error searching movies:', error);
-      }
-    };
-
-    if (searchQuery) {
-      fetchSearchMovies();
+  const fetchSearchMovies = useCallback(async () => {
+    try {
+      const response = await api('/search/movie', {
+        query,
+      });
+      setMovies(response.results);
+    } catch (error) {
+      console.error('Error searching movies:', error);
     }
-  }, [searchQuery]);
+  }, [query]);
+
+  useEffect(() => {
+    fetchSearchMovies();
+  }, [fetchSearchMovies]);
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    setSearchParams(searchQuery ? { query: searchQuery } : {});
   };
 
   return (
     <div>
-      <h2>Search Movies</h2>
+      <h1>Search Movies</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -46,7 +50,11 @@ export const Movies = () => {
 
       <ul>
         {movies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
+          <li key={movie.id}>
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+              {movie.title}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
