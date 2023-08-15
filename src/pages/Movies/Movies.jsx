@@ -1,8 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { api } from 'servises/api';
+import {
+  MovieItem,
+  MoviesList,
+  MoviesStyled,
+  SearchForm,
+} from './Movies.styles';
 
-export const Movies = () => {
+const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,9 +42,9 @@ export const Movies = () => {
   };
 
   return (
-    <div>
+    <MoviesStyled>
       <h1>Search Movies</h1>
-      <form onSubmit={handleSubmit}>
+      <SearchForm onSubmit={handleSubmit}>
         <input
           type="text"
           value={searchQuery}
@@ -46,17 +52,19 @@ export const Movies = () => {
           placeholder="Enter a movie title"
         />
         <button type="submit">Search</button>
-      </form>
+      </SearchForm>
 
-      <ul>
+      <MoviesList>
         {movies.map(movie => (
-          <li key={movie.id}>
+          <MovieItem key={movie.id}>
             <Link to={`/movies/${movie.id}`} state={{ from: location }}>
               {movie.title}
             </Link>
-          </li>
+          </MovieItem>
         ))}
-      </ul>
-    </div>
+      </MoviesList>
+    </MoviesStyled>
   );
 };
+
+export default Movies;

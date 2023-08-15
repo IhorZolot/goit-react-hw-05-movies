@@ -10,31 +10,27 @@ export const NavBar = () => {
   );
 };
 
-const SideBar = styled.nav`
-  background-color: #d5edfd;
-  min-height: 100vh;
-  border-right: 2px solid black;
+export const SideBar = styled.nav`
+  background-color: #eee1f8;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0.1, 0.5);
   display: flex;
-  flex-direction: column;
   gap: 25px;
-  position: fixed;
-  width: 200px;
-  padding: 40px 20px;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  justify-content: left;
 `;
+
 export const StyledLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px;
-  border-radius: 4px;
+  margin-left: 40px;
+  font-size: 20px;
   text-decoration: none;
-  color: black;
+  color: #160909;
+  font-weight: bold;
 
   &.active {
-    background-color: blue;
-    color: white;
-  }
-  &:hover:not(.active) {
-    background-color: lightblue;
+    color: #ff006f;
   }
 `;

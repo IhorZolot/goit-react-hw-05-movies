@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Home } from 'pages/Home';
-import { Movies } from 'pages/Movies';
-import { MovieDetails } from 'pages/MovieDetails';
-import { Cast } from 'pages/Cast';
-import { Reviews } from 'pages/Reviews';
 import { Layout } from './Layout';
+import { AppStyled } from './App.styled';
+
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
+const Cast = lazy(() => import('pages/Cast/Cast'));
+const Reviews = lazy(() => import('pages/Reviews/Reviews'));
 
 export const App = () => {
   return (
-    <div>
+    <AppStyled>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -21,6 +23,6 @@ export const App = () => {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </AppStyled>
   );
 };

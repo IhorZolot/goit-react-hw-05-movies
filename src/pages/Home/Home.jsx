@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { api } from 'servises/api';
+import { HomeStyled, ListItemStyled, ListStyled } from './Home.styled';
 
-export const Home = () => {
+const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   const fetchTrendingMovies = useCallback(async () => {
@@ -20,15 +21,17 @@ export const Home = () => {
   }, [fetchTrendingMovies]);
 
   return (
-    <div>
+    <HomeStyled>
       <h1>Popular Movies</h1>
-      <ul>
+      <ListStyled>
         {trendingMovies.map(movie => (
-          <li key={movie.id}>
+          <ListItemStyled key={movie.id}>
             <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-          </li>
+          </ListItemStyled>
         ))}
-      </ul>
-    </div>
+      </ListStyled>
+    </HomeStyled>
   );
 };
+
+export default Home;
